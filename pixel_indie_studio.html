@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Pioneers - Indie Game Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #0a0e29;
+            color: #ff6b6b;
+        }
+        
+        .pixel-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230f1642' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .pixel-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            color: #fff;
+            background-color: #4ecdc4;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 6px #45b7aa;
+        }
+
+        .pixel-button:hover {background-color: #3cb0a0}
+
+        .pixel-button:active {
+            background-color: #3cb0a0;
+            box-shadow: 0 3px #666;
+            transform: translateY(4px);
+        }
+
+        .pixel-ship {
+            width: 30px;
+            height: 20px;
+            background-color: #4ecdc4;
+            position: absolute;
+            clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
+        }
+
+        .pixel-arrow {
+            width: 20px;
+            height: 20px;
+            background-color: #4ecdc4;
+            clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden pixel-bg">
+    <nav class="bg-[#0f1642] text-[#ff6b6b] p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl">Pixel Pioneers</a>
+            <ul class="flex space-x-6 text-sm"> <!-- Увеличено расстояние между ссылками -->
+                <li><a href="#" class="hover:text-[#4ecdc4] transition duration-300">Home</a></li>
+                <li><a href="#" class="hover:text-[#4ecdc4] transition duration-300">Games</a></li>
+                <li><a href="#" class="hover:text-[#4ecdc4] transition duration-300">Blog</a></li>
+                <li><a href="#" class="hover:text-[#4ecdc4] transition duration-300">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div id="pixel-canvas"></div>
+        </div>
+        <div class="relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-[#ff6b6b]">Welcome to Pixel Pioneers</h1>
+            <p class="text-xl mb-8 text-[#4ecdc4]">Crafting Unforgettable Gaming Experiences</p>
+            <button class="pixel-button">Explore Our Universe</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="py-16 bg-[#0f1642]">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8">Featured Games</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-[#1a2151] p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 flex flex-col justify-between">
+                        <div>
+                            <img src="/api/placeholder/300/200" alt="English Learner" class="w-full h-40 object-cover mb-4 rounded">
+                            <h3 class="text-xl font-bold mb-2">English Learner</h3>
+                            <p class="text-[#4ecdc4]">Master English through fun word and picture matching!</p>
+                        </div>
+                        <button class="pixel-button mt-4">Play Now</button>
+                    </div>
+                    <div class="bg-[#1a2151] p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 flex flex-col justify-between">
+                        <div>
+                            <img src="/api/placeholder/300/200" alt="Estonian Adventure" class="w-full h-40 object-cover mb-4 rounded">
+                            <h3 class="text-xl font-bold mb-2">Estonian Adventure</h3>
+                            <p class="text-[#4ecdc4]">Learn Estonian with exciting picture-word challenges!</p>
+                        </div>
+                        <button class="pixel-button mt-4">Play Now</button>
+                    </div>
+                    <div class="bg-[#1a2151] p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 flex flex-col justify-between">
+                        <div>
+                            <img src="/api/placeholder/300/200" alt="Mystery Project X" class="w-full h-40 object-cover mb-4 rounded">
+                            <h3 class="text-xl font-bold mb-2">Mystery Project X</h3>
+                            <p class="text-[#4ecdc4]">Our next big adventure is coming soon!</p>
+                        </div>
+                        <button class="pixel-button mt-4">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-[#1a2151]">
+            <div class="container mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">About Our Studio</h2>
+                <div class="flex flex-wrap items-center">
+                    <div class="w-full md:w-1/2 mb-8 md:mb-0">
+                        <img src="/api/placeholder/400/400" alt="Game Development" class="w-full h-auto rounded-lg shadow-lg">
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-8 flex flex-col items-start"> <!-- Изменено выравнивание -->
+                        <p class="text-lg mb-4">We're a passionate solo developer crafting engaging mobile and arcade games. Our focus is on creating fun, educational experiences that bring joy to players worldwide.</p>
+                        <p class="text-lg mb-4">With a love for pixels and a drive for innovation, we're pushing the boundaries of indie game development.</p>
+                        <button class="pixel-button mt-4 self-end">Join Our Journey</button> <!-- Кнопка перемещена вправо -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-[#0f1642]">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8">Latest News</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-[#1a2151] p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold mb-2">New Game Release</h3>
+                        <p class="text-[#4ecdc4] mb-4">Our latest language learning game is now available! Download and start your linguistic journey today.</p>
+                        <button class="pixel-button">Read More</button>
+                    </div>
+                    <div class="bg-[#1a2151] p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-bold mb-2">Development Update</h3>
+                        <p class="text-[#4ecdc4] mb-4">We're working on exciting new features for our upcoming PC game. Stay tuned for more details!</p>
+                        <button class="pixel-button">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-[#1a2151]">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8">Our Game Development Process</h2>
+                <div class="flex justify-center items-center">
+                    <div class="bg-[#0f1642] p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-bold mb-2">1. Concept</h3>
+                        <p class="text-[#4ecdc4] text-sm">Brainstorming ideas</p>
+                    </div>
+                    <div class="pixel-arrow mx-4"></div>
+                    <div class="bg-[#0f1642] p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-bold mb-2">2. Design</h3>
+                        <p class="text-[#4ecdc4] text-sm">Crafting mechanics</p>
+                    </div>
+                    <div class="pixel-arrow mx-4"></div>
+                    <div class="bg-[#0f1642] p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-bold mb-2">3. Development</h3>
+                        <p class="text-[#4ecdc4] text-sm">Bringing to life</p>
+                    </div>
+                    <div class="pixel-arrow mx-4"></div>
+                    <div class="bg-[#0f1642] p-6 rounded-lg shadow-lg">
+                        <h3 class="text-lg font-bold mb-2">4. Polish</h3>
+                        <p class="text-[#4ecdc4] text-sm">Perfecting gameplay</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-[#0f1642]">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-[#ff6b6b]">Join Our Community</h2> <!-- Увеличена яркость -->
+                <p class="text-xl mb-8 text-[#4ecdc4]">Stay updated with our latest games, behind-the-scenes content, and exclusive offers!</p>
+                <form class="max-w-md mx-auto">
+                    <div class="flex">
+                        <input type="email" placeholder="Enter your email" class="flex-grow px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#4ecdc4]" required>
+                        <button type="submit" class="pixel-button rounded-r-lg rounded-l-none">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#0f1642] text-[#ff6b6b] py-16"> <!-- Увеличено расстояние от предыдущей секции -->
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Pixel Pioneers. All rights reserved.</p>
+            <div class="mt-4">
+                <a href="#" class="text-[#ff6b6b] hover:text-[#4ecdc4] mx-2 transition duration-300">Facebook</a>
+                <a href="#" class="text-[#ff6b6b] hover:text-[#4ecdc4] mx-2 transition duration-300">Twitter</a>
+                <a href="#" class="text-[#ff6b6b] hover:text-[#4ecdc4] mx-2 transition duration-300">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Pixel Animation
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.getElementById('pixel-canvas').appendChild(canvas);
+
+        const pixels = [];
+        const pixelSize = 5;
+        const numPixels = 100;
+
+        class Pixel {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = pixelSize;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = (Math.random() - 0.5) * 2;
+                this.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        for (let i = 0; i < numPixels; i++) {
+            pixels.push(new Pixel());
+        }
+
+        // Pixel Ships
+        const ships = [];
+        const numShips = 5;
+
+        class Ship {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = 30;
+                this.speedX = (Math.random() - 0.5) * 4;
+                this.speedY = (Math.random() - 0.5) * 4;
+                this.angle = Math.atan2(this.speedY, this.speedX);
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.angle = Math.atan2(this.speedY, this.speedX);
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = '#4ecdc4';
+                ctx.beginPath();
+                ctx.moveTo(-this.size / 2, 0);
+                ctx.lineTo(this.size / 2, -this.size / 4);
+                ctx.lineTo(this.size / 2, this.size / 4);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < numShips; i++) {
+            ships.push(new Ship());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            pixels.forEach(pixel => {
+                pixel.update();
+                pixel.draw();
+            });
+
+            ships.forEach(ship => {
+                ship.update();
+                ship.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Initialize animations
+        animate();
+
+        // GSAP Animations
+        gsap.from("nav", { y: -100, opacity: 0, duration: 1, ease: "power3.out" });
+        gsap.from("header h1", { y: 50, opacity: 0, duration: 1, delay: 0.5, ease: "power3.out" });
+        gsap.from("header p", { y: 50, opacity: 0, duration: 1, delay: 0.7, ease: "power3.out" });
+        gsap.from("header button", { y: 50, opacity: 0, duration: 1, delay: 0.9, ease: "power3.out" });
+
+        // Scroll Animations
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                    end: "top 20%",
+                    scrub: 1
+                }
+            });
+        });
+
+        // Add hover effects to game cards
+        const gameCards = document.querySelectorAll('.bg-[#1a2151]');
+        gameCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, { scale: 1.05, duration: 0.3 });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, { scale: 1, duration: 0.3 });
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for header
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.pageYOffset;
+            gsap.to('header', {
+                y: scrollPosition * 0.5,
+                duration: 0.3,
+                ease: 'power1.out'
+            });
+        });
+
+        // Typing effect for main title
+        const mainTitle = document.querySelector('header h1');
+        const titleText = mainTitle.textContent;
+        mainTitle.textContent = '';
+        let i = 0;
+        function typeWriter() {
+            if (i < titleText.length) {
+                mainTitle.textContent += titleText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        typeWriter();
+
+        // Responsive design adjustments
+        function handleResize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>
